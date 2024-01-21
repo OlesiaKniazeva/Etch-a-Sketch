@@ -18,8 +18,8 @@ function convertToPixels(number) {
 function setContainerSize(size = DEFAULT_SIZE) {
   const container = document.querySelector('div.container');
 
-  container.style.width = size;
-  container.style.height = size;
+  container.style.width = convertToPixels(size);
+  container.style.height = convertToPixels(size);
 }
 
 function countSquareSize(amount, width = DEFAULT_SIZE) {
@@ -29,13 +29,18 @@ function countSquareSize(amount, width = DEFAULT_SIZE) {
 function createGridSquares(amount = DEFAULT_SQUARE_AMOUNT) {
   const square_side = countSquareSize(amount);
 
-  for (let i = 0; i < amount ** 2; ++i) {
-    const div = document.createElement('div');
-    div.classList.add('grid-square');
-    div.style.width = square_side + 'px';
-    div.style.height = square_side + 'px';
+  for (let row = 0; row < amount; ++row) {
+    console.log(row);
+    let rowContainer = document.createElement('div');
+    CONTAINER.appendChild(rowContainer);
 
-    CONTAINER.appendChild(div);
+    for (let squareCounter = 0; squareCounter < amount; squareCounter++) {
+      const square = document.createElement('div');
+      square.style.width = convertToPixels(square_side);
+      square.style.height = convertToPixels(square_side);
+      square.classList.add('grid-square');
+      rowContainer.appendChild(square);
+    }
   }
 }
 
