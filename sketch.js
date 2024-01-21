@@ -47,3 +47,6 @@ function createGridSquares(amount = DEFAULT_SQUARE_AMOUNT) {
 function getUserInput() {
   //*//
 }
+
+
+module.exports = {convertToPixels};
