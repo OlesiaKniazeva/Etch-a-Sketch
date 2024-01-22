@@ -21,6 +21,10 @@ div.square {
   background-color: antiquewhite;
 }
 
+div.square.hover {
+  background-color: rgb(247, 218, 181);
+}
+
 button.user-input {
   margin-bottom: 20px;
 }

@@ -56,21 +56,22 @@ function addEventsToObjects(objects) {
 }
 
 function addMouseEvent(object) {
+  const colorClassName = 'hover'
   object.addEventListener('mouseover', (event) => {
-    changeSquareColor(event.target, 'black')
+    addSquareColor(event.target, colorClassName)
   })
 
   object.addEventListener('mouseout', (event) => {
-    resetSquareColor(event.target);
+    resetSquareColor(event.target, colorClassName);
   })
 }
 
-function resetSquareColor(object) {
-
+function resetSquareColor(object, className) {
+  object.classList.remove(className);
 }
 
-function changeSquareColor(object, color) {
-  object.style.backgroundColor = color;
+function addSquareColor(object, className) {
+  object.classList.add(className);
 }
 
 function addPixelatedTrail() {
