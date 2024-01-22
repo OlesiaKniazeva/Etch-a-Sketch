@@ -23,7 +23,7 @@ function setContainerSize(size = DEFAULT_SIZE) {
 }
 
 function countSquareSize(amount, width = DEFAULT_SIZE) {
-  return DEFAULT_SIZE / amount;
+  return width / amount;
 }
 
 function createGridSquares(amount = DEFAULT_SQUARE_AMOUNT) {
@@ -47,6 +47,3 @@ function createGridSquares(amount = DEFAULT_SQUARE_AMOUNT) {
 function getUserInput() {
   //*//
 }
-
-
-module.exports = {convertToPixels};
