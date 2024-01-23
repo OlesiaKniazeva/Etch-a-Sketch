@@ -4,17 +4,57 @@ const DEFAULT_SIZE = 960;
 main();
 
 function main() {
-  const container = document.querySelector('.container');
+  const container = document.querySelector('.squares-container');
   const input_button = document.querySelector('button.user-input');
+  const canva = document.querySelector('.canva');
 
   setContainerSize(container);
   createGridSquares(container, 5);
 
   addEventsToObjects(getObjects(container, '.square'));
-  
-  let input = getUserInput();
 
+  setUpCanva(canva);
+  addEventToCanva(canva);
+
+  let input = getUserInput();
 }
+
+function setUpCanva(canva) {
+  canva.width = DEFAULT_SIZE;
+  canva.height = DEFAULT_SIZE;
+}
+
+function addEventToCanva(container) {
+  let x = null;
+  let y = null;
+  let context = container.getContext('2d');
+
+  container.addEventListener('mousemove', (event) => {
+    console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
+    if (x !== null && y !== null) {
+      console.log(x, y, event.offsetX, event.offsetY);
+      drawPixelatedLine(context, x, y, event.offsetX, event.offsetY);
+    }
+
+    x = event.offsetX;
+    y = event.offsetY;
+
+  })
+}
+
+
+function drawPixelatedLine(context, x1, y1, x2, y2) {
+  console.log(x1, y1, x2, y2);
+  context.beginPath();
+  context.strokeStyle = 'black';
+  context.lineWidth = 1;
+  context.setLineDash([4, 2]);
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.stroke();
+  context.closePath();
+}
+
 
 function convertToPixels(number) {
   return number + 'px';
@@ -52,18 +92,21 @@ function getObjects(container, object_name) {
 }
 
 function addEventsToObjects(objects) {
-  objects.forEach(addMouseEvent);
+  objects.forEach((object) => {
+    addMouseHoverEvent(object);
+    // addMouseMovingEvent(object);
+  });
 }
 
-function addMouseEvent(object) {
-  const colorClassName = 'hover'
+function addMouseHoverEvent(object) {
+  const colorClassName = 'hover';
   object.addEventListener('mouseover', (event) => {
-    addSquareColor(event.target, colorClassName)
-  })
+    addSquareColor(event.target, colorClassName);
+  });
 
   object.addEventListener('mouseout', (event) => {
     resetSquareColor(event.target, colorClassName);
-  })
+  });
 }
 
 function resetSquareColor(object, className) {
@@ -72,10 +115,6 @@ function resetSquareColor(object, className) {
 
 function addSquareColor(object, className) {
   object.classList.add(className);
-}
-
-function addPixelatedTrail() {
-
 }
 
 function getUserInput() {
