@@ -8,12 +8,9 @@ function main() {
   const input_button = document.querySelector('button.user-input');
 
   setContainerSize(container);
-  createGridSquares(container, 15);
+  createGridSquares(container, 5);
 
-  // addEventsToObjects(getObjects(container, '.square'));
-
-  // setUpCanva(canva);
-  // addEventToCanva(canva);
+  addEventsToObjects(getObjects(container, '.square'));
 
   // let input = getUserInput();
 }
@@ -23,7 +20,7 @@ function setUpCanva(canva) {
   canva.height = DEFAULT_SIZE;
 }
 
-function addEventToCanva(container) {
+function addMouseMovingEvent(container) {
   let x = null;
   let y = null;
   let context = container.getContext('2d');
@@ -51,7 +48,7 @@ function drawPixelatedLine(context, x1, y1, x2, y2) {
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.stroke();
-  context.closePath();
+  // context.closePath();
 }
 
 
@@ -70,6 +67,7 @@ function countSquareSize(amount, width = DEFAULT_SIZE) {
 
 function createGridSquares(container, amount = DEFAULT_SQUARE_AMOUNT) {
   const square_side = countSquareSize(amount);
+
 
   for (let row = 0; row < amount; ++row) {
     console.log(row);
@@ -95,7 +93,7 @@ function getObjects(container, object_name) {
 function addEventsToObjects(objects) {
   objects.forEach((object) => {
     addMouseHoverEvent(object);
-    // addMouseMovingEvent(object);
+    addMouseMovingEvent(object);
   });
 }
 
