@@ -16,13 +16,16 @@ body {
 
 body {
   background-color: rgb(255, 245, 231);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .parent-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .squares-container {
@@ -33,7 +36,7 @@ h1 {
   font-size: 40px;
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .container-get-data {
@@ -41,7 +44,7 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 15px;
+  margin: 10px;
 }
 
 h2.input-header {
@@ -90,18 +93,14 @@ button.send-input:hover {
 }
 
 button.send-input:active {
-  background-color: rgb(
-    203,
-    173,
-    119
-  ); /* Change the color to what you prefer */
+  background-color: rgb(203, 173, 119);
 }
 
 .input-container {
   display: flex;
   gap: 10px;
   align-items: center;
-  height: 100px;
+  height: 60px;
 }
 
 input[type='number']::-webkit-inner-spin-button,
