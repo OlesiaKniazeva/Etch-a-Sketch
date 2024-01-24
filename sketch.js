@@ -17,33 +17,50 @@ function AddDefaultProperties(container) {
   addEventsToDraw(getObjects(container, '.square'));
 }
 
+function checkActiveButton(radioButtons) {
+  let buttonValue;
+  radioButtons.forEach((radioButton) => {
+    if (radioButton.checked) {
+      buttonValue = radioButton.value;
+    }
+  });
+  return buttonValue;
+}
+
+function applyNewBehavior(container, radioButtons) {
+  let selectedButton = checkActiveButton(radioButtons);
+  let size = getObjects(container, '.square').length ** 0.5;
+
+  erasePreviousCanvas(container);
+  createGridSquares(container, size);
+
+  applyCanvasEffect(container, selectedButton);
+}
+
 function changeDesiredBehavior(container) {
   const radioButtons = document.querySelectorAll("input[name='sketch-option']");
 
   radioButtons.forEach((radioButton) => {
-    radioButton.addEventListener('click', () => {
-      let size = getObjects(container, '.square').length ** 0.5;
-      console.log(size);
-      erasePreviousCanvas(container);
-      createGridSquares(container, size);
-
-      let selectedButton = radioButton.value;
-
-      switch (selectedButton) {
-        case 'drawing':
-          addEventsToDraw(getObjects(container, '.square'));
-          break;
-        case 'random-color':
-          addEventsToRandomlyChangeColor(getObjects(container, '.square'));
-          break;
-        case 'progressive-darkening':
-          addEventsToDarken(getObjects(container, '.square'))
-          break;
-        default:
-          console.log('unexpected radio button');
-      }
-    });
+    radioButton.addEventListener('change', () =>
+      applyNewBehavior(container, radioButtons),
+    );
   });
+}
+
+function applyCanvasEffect(container, selectedButton) {
+  switch (selectedButton) {
+    case 'drawing':
+      addEventsToDraw(getObjects(container, '.square'));
+      break;
+    case 'random-color':
+      addEventsToRandomlyChangeColor(getObjects(container, '.square'));
+      break;
+    case 'progressive-darkening':
+      addEventsToDarken(getObjects(container, '.square'));
+      break;
+    default:
+      console.log('unexpected radio button');
+  }
 }
 
 function addEventsToDarken(objects) {
@@ -53,30 +70,27 @@ function addEventsToDarken(objects) {
       if (brightnessPercent > 0) {
         brightnessPercent -= 10;
         object.style.filter = `brightness(${brightnessPercent}%)`;
-        console.log(object.style.filter);
       }
-    })
-  })
+    });
+  });
 }
 
-
 function addEventsToRandomlyChangeColor(objects) {
-
   objects.forEach((object) => {
-    object.addEventListener("mouseover", (event) => {
+    object.addEventListener('mouseover', (event) => {
       let randomColor = getRandomColor();
       object.style.backgroundColor = randomColor;
-    })
-  })
+    });
+  });
 }
 
 function getRandomColor() {
   const hexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
-  let code = "";
-  for(let i=0; i<6; i++){
-   code += hexArray[Math.floor(Math.random()*16)];
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += hexArray[Math.floor(Math.random() * 16)];
   }
-  return `#${code}`
+  return `#${code}`;
 }
 
 function setUpCanva(canva) {
@@ -95,10 +109,7 @@ function addMouseMovingEvent(object) {
 
     let context = object.getContext('2d');
 
-    // console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
-
     if (x !== null && y !== null) {
-      // console.log(x, y, event.offsetX, event.offsetY);
       drawPixelatedLine(context, x, y, event.offsetX, event.offsetY);
     }
 
@@ -118,7 +129,6 @@ function addMouseMovingEvent(object) {
 }
 
 function drawPixelatedLine(context, x1, y1, x2, y2) {
-  // console.log(x1, y1, x2, y2);
   context.beginPath();
   context.strokeStyle = 'black';
   context.lineWidth = 1;
@@ -146,7 +156,6 @@ function createGridSquares(container, amount = DEFAULT_SQUARE_AMOUNT) {
   const square_side = countSquareSize(amount);
 
   for (let row = 0; row < amount; ++row) {
-    // console.log(row);
     let rowContainer = document.createElement('div');
     rowContainer.classList.add('row-container');
     container.appendChild(rowContainer);
@@ -185,10 +194,6 @@ function addMouseHoverEvent(object) {
   });
 }
 
-// function addColorOnHoverEvent(colorClassName) {
-
-// }
-
 function resetSquareColor(object, className) {
   object.classList.remove(className);
 }
@@ -203,12 +208,15 @@ function setFieldsToUserInput(container) {
 
   button.addEventListener('click', () => {
     const userInput = input_field.value;
-    console.log(userInput);
 
     if (isValid(userInput)) {
       erasePreviousCanvas(container);
       createGridSquares(container, userInput);
-      addEventsToDraw(getObjects(container, '.square'));
+
+      const radioButtons = document.querySelectorAll(
+        "input[name='sketch-option']",
+      );
+      applyCanvasEffect(container, checkActiveButton(radioButtons));
     }
   });
 }
