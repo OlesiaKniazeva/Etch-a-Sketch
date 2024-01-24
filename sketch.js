@@ -127,15 +127,17 @@ function setFieldsToUserInput() {
     console.log(userInput);
   
     if(isValid(userInput)) {
-      erasePreviousCanvas();
+      const container = document.querySelector('.squares-container');
+      erasePreviousCanvas(container);
+      createGridSquares(container, userInput);
+      addEventsToObjects(getObjects(container, '.square'));
     }
   });
 }
 
-function erasePreviousCanvas() {
-  const container = document.querySelector('.squares-container');
-  if (container) {
-    
+function erasePreviousCanvas(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
 }
 
