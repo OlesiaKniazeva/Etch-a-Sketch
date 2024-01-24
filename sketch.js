@@ -5,14 +5,12 @@ main();
 
 function main() {
   const container = document.querySelector('.squares-container');
-  // const input_button = document.querySelector('button.user-input');
 
   setContainerSize(container);
   createGridSquares(container, 5);
-
   addEventsToObjects(getObjects(container, '.square'));
 
-  // let input = getUserInput();
+  setFieldsToUserInput();
 }
 
 function setUpCanva(canva) {
@@ -27,29 +25,25 @@ function addMouseMovingEvent(object) {
   object.addEventListener('mousemove', (event) => {
     let context = object.getContext('2d');
 
-    console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
+    // console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
 
     if (x !== null && y !== null) {
-      console.log(x, y, event.offsetX, event.offsetY);
+      // console.log(x, y, event.offsetX, event.offsetY);
       drawPixelatedLine(context, x, y, event.offsetX, event.offsetY);
     }
-    
+
     x = event.offsetX;
     y = event.offsetY;
-
   });
 
   object.addEventListener('mouseleave', () => {
     x = null;
     y = null;
   });
-
-
 }
 
-
 function drawPixelatedLine(context, x1, y1, x2, y2) {
-  console.log(x1, y1, x2, y2);
+  // console.log(x1, y1, x2, y2);
   context.beginPath();
   context.strokeStyle = 'black';
   context.lineWidth = 1;
@@ -59,7 +53,6 @@ function drawPixelatedLine(context, x1, y1, x2, y2) {
   context.stroke();
   context.closePath();
 }
-
 
 function convertToPixels(number) {
   return number + 'px';
@@ -78,7 +71,7 @@ function createGridSquares(container, amount = DEFAULT_SQUARE_AMOUNT) {
   const square_side = countSquareSize(amount);
 
   for (let row = 0; row < amount; ++row) {
-    console.log(row);
+    // console.log(row);
     let rowContainer = document.createElement('div');
     rowContainer.classList.add('row-container');
     container.appendChild(rowContainer);
@@ -125,6 +118,32 @@ function addSquareColor(object, className) {
   object.classList.add(className);
 }
 
+function setFieldsToUserInput() {
+  const input_field = document.querySelector('input.square-amount');
+  const button = document.querySelector('button.send-input');
+
+  button.addEventListener('click', () => {
+    const userInput = input_field.value;
+    console.log(userInput);
+  
+    if(isValid(userInput)) {
+      erasePreviousCanvas();
+    }
+  });
+}
+
+function erasePreviousCanvas() {
+  const container = document.querySelector('.squares-container');
+  if (container) {
+    
+  }
+}
+
+
+function isValid(input) {
+  return !(isNaN(input) || input < 1 || input > 100 );
+}
+ 
+
 function getUserInput() {
-  //*//
 }
