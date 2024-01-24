@@ -23,6 +23,10 @@ function addMouseMovingEvent(object) {
   let y = null;
 
   object.addEventListener('mousemove', (event) => {
+    if (event.buttons != 1) {
+      return;
+    }
+
     let context = object.getContext('2d');
 
     // console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
@@ -37,6 +41,11 @@ function addMouseMovingEvent(object) {
   });
 
   object.addEventListener('mouseleave', () => {
+    x = null;
+    y = null;
+  });
+
+  object.addEventListener('mouseup', () => {
     x = null;
     y = null;
   });
