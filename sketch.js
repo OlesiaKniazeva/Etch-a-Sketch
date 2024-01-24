@@ -1,16 +1,82 @@
-const DEFAULT_SQUARE_AMOUNT = 16;
+const DEFAULT_SQUARE_AMOUNT = 5;
 const DEFAULT_SIZE = 900;
 
 main();
 
 function main() {
   const container = document.querySelector('.squares-container');
+  AddDefaultProperties(container);
 
+  setFieldsToUserInput(container);
+  changeDesiredBehavior(container);
+}
+
+function AddDefaultProperties(container) {
   setContainerSize(container);
-  createGridSquares(container, 5);
-  addEventsToObjects(getObjects(container, '.square'));
+  createGridSquares(container);
+  addEventsToDraw(getObjects(container, '.square'));
+}
 
-  setFieldsToUserInput();
+function changeDesiredBehavior(container) {
+  const radioButtons = document.querySelectorAll("input[name='sketch-option']");
+
+  radioButtons.forEach((radioButton) => {
+    radioButton.addEventListener('click', () => {
+      let size = getObjects(container, '.square').length ** 0.5;
+      console.log(size);
+      erasePreviousCanvas(container);
+      createGridSquares(container, size);
+
+      let selectedButton = radioButton.value;
+
+      switch (selectedButton) {
+        case 'drawing':
+          addEventsToDraw(getObjects(container, '.square'));
+          break;
+        case 'random-color':
+          addEventsToRandomlyChangeColor(getObjects(container, '.square'));
+          break;
+        case 'progressive-darkening':
+          addEventsToDarken(getObjects(container, '.square'))
+          break;
+        default:
+          console.log('unexpected radio button');
+      }
+    });
+  });
+}
+
+function addEventsToDarken(objects) {
+  objects.forEach((object) => {
+    let brightnessPercent = 100;
+    object.addEventListener('mouseover', () => {
+      if (brightnessPercent > 0) {
+        brightnessPercent -= 10;
+        object.style.filter = `brightness(${brightnessPercent}%)`;
+        console.log(object.style.filter);
+      }
+    })
+  })
+}
+
+
+function addEventsToRandomlyChangeColor(objects) {
+
+  objects.forEach((object) => {
+    object.addEventListener("mouseover", (event) => {
+      let randomColor = getRandomColor();
+      object.style.backgroundColor = randomColor;
+    })
+  })
+}
+
+function getRandomColor() {
+  const hexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
+  let code = "";
+  for(let i=0; i<6; i++){
+   code += hexArray[Math.floor(Math.random()*16)];
+  }
+  return `#${code}`
 }
 
 function setUpCanva(canva) {
@@ -101,7 +167,7 @@ function getObjects(container, object_name) {
   return container.querySelectorAll(object_name);
 }
 
-function addEventsToObjects(objects) {
+function addEventsToDraw(objects) {
   objects.forEach((object) => {
     addMouseHoverEvent(object);
     addMouseMovingEvent(object);
@@ -119,6 +185,10 @@ function addMouseHoverEvent(object) {
   });
 }
 
+// function addColorOnHoverEvent(colorClassName) {
+
+// }
+
 function resetSquareColor(object, className) {
   object.classList.remove(className);
 }
@@ -127,19 +197,18 @@ function addSquareColor(object, className) {
   object.classList.add(className);
 }
 
-function setFieldsToUserInput() {
+function setFieldsToUserInput(container) {
   const input_field = document.querySelector('input.square-amount');
   const button = document.querySelector('button.send-input');
 
   button.addEventListener('click', () => {
     const userInput = input_field.value;
     console.log(userInput);
-  
-    if(isValid(userInput)) {
-      const container = document.querySelector('.squares-container');
+
+    if (isValid(userInput)) {
       erasePreviousCanvas(container);
       createGridSquares(container, userInput);
-      addEventsToObjects(getObjects(container, '.square'));
+      addEventsToDraw(getObjects(container, '.square'));
     }
   });
 }
@@ -150,11 +219,6 @@ function erasePreviousCanvas(container) {
   }
 }
 
-
 function isValid(input) {
-  return !(isNaN(input) || input < 1 || input > 100 );
-}
- 
-
-function getUserInput() {
+  return !(isNaN(input) || input < 1 || input > 100);
 }
