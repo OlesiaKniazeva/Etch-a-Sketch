@@ -26,11 +26,9 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin: 15px;
 }
 
-.squares-container {
-  margin-bottom: 20px;
-}
 
 h1 {
   font-size: 40px;
@@ -39,17 +37,29 @@ h1 {
   margin-bottom: 15px;
 }
 
-.container-get-data {
+.container-behavior {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 10px;
+  gap: 50px;
+}
+
+.container-get-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+h2.input-header,
+h2.options-header {
+  font-size: 20px;
 }
 
 h2.input-header {
-  font-size: 18px;
-  margin: 0 10px;
+  margin-right: 15px;
+}
+
+h2.options-header {
+  margin-bottom: 3px;
 }
 
 input.square-amount {
@@ -97,9 +107,7 @@ button.send-input:active {
 }
 
 .input-container {
-  display: flex;
   gap: 10px;
-  align-items: center;
   height: 60px;
 }
 

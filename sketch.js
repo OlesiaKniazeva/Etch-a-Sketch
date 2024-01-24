@@ -1,5 +1,5 @@
 const DEFAULT_SQUARE_AMOUNT = 16;
-const DEFAULT_SIZE = 1200;
+const DEFAULT_SIZE = 900;
 
 main();
 
