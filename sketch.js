@@ -5,7 +5,7 @@ main();
 
 function main() {
   const container = document.querySelector('.squares-container');
-  const input_button = document.querySelector('button.user-input');
+  // const input_button = document.querySelector('button.user-input');
 
   setContainerSize(container);
   createGridSquares(container, 5);

@@ -13,6 +13,43 @@ html, body {
   padding: 0;
 }
 
+body {
+  background-color: rgb(255, 245, 231);
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+h1 {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.container-get-data {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px;
+}
+
+h2.input-header {
+  font-size: 18px;
+  margin: 0 10px;
+}
+
+input.square-amount {
+  border: 2px solid rgb(182, 158, 126);
+  border-radius: 5px;
+  background-color: rgb(255, 254, 253);
+  width: 120px;
+}
+
 .row-container {
   background-color: black;
   margin: 0;
@@ -28,6 +65,22 @@ html, body {
   background-color: rgb(247, 218, 181);
 }
 
-button.user-input {
-  margin-bottom: 20px;
+button.send-input {
+  background-color: rgb(237, 192, 134);
+  border: none;
+  padding: 5px 30px;
+  border-radius: 5px;
+}
+
+button.send-input:hover {
+  background-color: rgb(253, 193, 114);
+}
+
+button.send-input:active {
+  background-color: rgb(203, 173, 119); /* Change the color to what you prefer */
+}
+
+button.send-input,
+input.square-amount {
+  margin: 10px 0;
 }
