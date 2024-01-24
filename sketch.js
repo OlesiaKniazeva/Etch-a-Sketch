@@ -20,22 +20,31 @@ function setUpCanva(canva) {
   canva.height = DEFAULT_SIZE;
 }
 
-function addMouseMovingEvent(container) {
+function addMouseMovingEvent(object) {
   let x = null;
   let y = null;
-  let context = container.getContext('2d');
 
-  container.addEventListener('mousemove', (event) => {
+  object.addEventListener('mousemove', (event) => {
+    let context = object.getContext('2d');
+
     console.log(`Mouse position: ${event.offsetX}, ${event.offsetY}`);
+
     if (x !== null && y !== null) {
       console.log(x, y, event.offsetX, event.offsetY);
       drawPixelatedLine(context, x, y, event.offsetX, event.offsetY);
     }
-
+    
     x = event.offsetX;
     y = event.offsetY;
 
-  })
+  });
+
+  object.addEventListener('mouseleave', () => {
+    x = null;
+    y = null;
+  });
+
+
 }
 
 
@@ -48,7 +57,7 @@ function drawPixelatedLine(context, x1, y1, x2, y2) {
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
   context.stroke();
-  // context.closePath();
+  context.closePath();
 }
 
 
@@ -68,7 +77,6 @@ function countSquareSize(amount, width = DEFAULT_SIZE) {
 function createGridSquares(container, amount = DEFAULT_SQUARE_AMOUNT) {
   const square_side = countSquareSize(amount);
 
-
   for (let row = 0; row < amount; ++row) {
     console.log(row);
     let rowContainer = document.createElement('div');
@@ -81,6 +89,7 @@ function createGridSquares(container, amount = DEFAULT_SQUARE_AMOUNT) {
       square.height = square_side;
       square.classList.add('square');
       square.classList.add('canva');
+
       rowContainer.appendChild(square);
     }
   }
