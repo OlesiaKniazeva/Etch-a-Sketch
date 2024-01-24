@@ -8,7 +8,8 @@ html {
   box-sizing: inherit;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -24,6 +25,10 @@ body {
   align-items: center;
 }
 
+.squares-container {
+  margin-bottom: 20px;
+}
+
 h1 {
   font-size: 40px;
   display: flex;
@@ -34,6 +39,7 @@ h1 {
 .container-get-data {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 15px;
 }
@@ -48,6 +54,8 @@ input.square-amount {
   border-radius: 5px;
   background-color: rgb(255, 254, 253);
   width: 120px;
+  text-align: right;
+  padding-right: 10px;
 }
 
 .row-container {
@@ -72,15 +80,36 @@ button.send-input {
   border-radius: 5px;
 }
 
+input.square-amount,
+button.send-input {
+  height: 30px;
+}
+
 button.send-input:hover {
   background-color: rgb(253, 193, 114);
 }
 
 button.send-input:active {
-  background-color: rgb(203, 173, 119); /* Change the color to what you prefer */
+  background-color: rgb(
+    203,
+    173,
+    119
+  ); /* Change the color to what you prefer */
 }
 
-button.send-input,
-input.square-amount {
-  margin: 10px 0;
+.input-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 100px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
